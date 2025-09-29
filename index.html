@@ -28,7 +28,8 @@
             'spin-slow': 'spin 12s linear infinite',
             'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             'fade-in': 'fadeIn 0.8s ease-in-out',
-            'roll': 'roll 0.5s ease-out'
+            'roll': 'roll 0.5s ease-out',
+            'bounce': 'bounce 0.5s ease-in-out'
           },
           keyframes: {
             float: {
@@ -99,12 +100,12 @@
         height: 100%;
       }
       .dice-symbol {
-        font-size: clamp(2.5rem, 10vw, 4rem);
+        font-size: clamp(2rem, 8vw, 3.5rem);
         line-height: 1;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
       }
       .dice-name {
-        font-size: clamp(1rem, 4vw, 1.25rem);
+        font-size: clamp(0.875rem, 3vw, 1.125rem);
         line-height: 1;
       }
     }
@@ -134,7 +135,6 @@
         <p class="text-blue-100 mb-4 sm:mb-6 text-xs sm:text-sm md:text-base px-1">
           请用明确的方式提出您想了解的问题，例如："我与某人的关系会如何发展？"
         </p>
-        <!-- 调整了输入框高度，更适合简短输入 -->
         <textarea 
           id="question" 
           class="w-full bg-dark/50 border border-purple-800 rounded-lg p-3 sm:p-4 text-light placeholder:text-purple-400/50 focus:outline-none focus:ring-2 focus:ring-accent/50 transition-all resize-none h-20 sm:h-24 text-sm"
@@ -154,39 +154,36 @@
       <section id="result-section" class="hidden animate-fade-in">
         <h2 class="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center text-purple-200">占卜结果</h2>
         
-        <!-- 骰子展示 - 响应式布局 -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-10 max-w-4xl mx-auto px-2">
+        <!-- 骰子展示 - 响应式布局，三个并排无滚动条 -->
+        <div class="flex justify-center items-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-2 max-w-full mx-auto">
           <!-- 行星骰子 -->
-          <div class="dice-container flex flex-col items-center p-2">
-            <div id="planet-dice" class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl dice-shadow bg-gradient-to-br from-purple-900 to-primary flex items-center justify-center font-bold mb-2 sm:mb-3 transform transition-all duration-500 hover:rotate-6">
+          <div class="dice-container flex-shrink-0 flex flex-col items-center p-1 w-1/3 max-w-[120px] sm:max-w-[150px]">
+            <h3 class="text-base sm:text-lg font-bold text-center mb-1 text-accent">行星</h3>
+            <div id="planet-dice" class="w-full aspect-square rounded-2xl dice-shadow bg-gradient-to-br from-purple-900 to-primary flex items-center justify-center font-bold transform transition-all duration-500 hover:rotate-6">
               <div class="dice-content">
                 <div class="dice-symbol text-accent"><i class="fa fa-star"></i></div>
               </div>
             </div>
-            <h3 class="text-base sm:text-lg md:text-xl font-bold text-center mb-1 text-accent">行星</h3>
-            <p id="planet-result" class="text-center text-blue-100 text-xs sm:text-sm result-hidden"></p>
           </div>
           
           <!-- 星座骰子 -->
-          <div class="dice-container flex flex-col items-center p-2">
-            <div id="sign-dice" class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl dice-shadow bg-gradient-to-br from-blue-900 to-secondary flex items-center justify-center font-bold mb-2 sm:mb-3 transform transition-all duration-500 hover:rotate-6">
+          <div class="dice-container flex-shrink-0 flex flex-col items-center p-1 w-1/3 max-w-[120px] sm:max-w-[150px]">
+            <h3 class="text-base sm:text-lg font-bold text-center mb-1 text-accent">星座</h3>
+            <div id="sign-dice" class="w-full aspect-square rounded-2xl dice-shadow bg-gradient-to-br from-blue-900 to-secondary flex items-center justify-center font-bold transform transition-all duration-500 hover:rotate-6">
               <div class="dice-content">
                 <div class="dice-symbol text-accent"><i class="fa fa-sun-o"></i></div>
               </div>
             </div>
-            <h3 class="text-base sm:text-lg md:text-xl font-bold text-center mb-1 text-accent">星座</h3>
-            <p id="sign-result" class="text-center text-blue-100 text-xs sm:text-sm result-hidden"></p>
           </div>
           
           <!-- 宫位骰子 -->
-          <div class="dice-container flex flex-col items-center p-2">
-            <div id="house-dice" class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-2xl dice-shadow bg-gradient-to-br from-indigo-900 to-purple-800 flex items-center justify-center font-bold mb-2 sm:mb-3 transform transition-all duration-500 hover:rotate-6">
+          <div class="dice-container flex-shrink-0 flex flex-col items-center p-1 w-1/3 max-w-[120px] sm:max-w-[150px]">
+            <h3 class="text-base sm:text-lg font-bold text-center mb-1 text-accent">宫位</h3>
+            <div id="house-dice" class="w-full aspect-square rounded-2xl dice-shadow bg-gradient-to-br from-indigo-900 to-purple-800 flex items-center justify-center font-bold transform transition-all duration-500 hover:rotate-6">
               <div class="dice-content">
                 <div class="dice-symbol text-accent"><i class="fa fa-home"></i></div>
               </div>
             </div>
-            <h3 class="text-base sm:text-lg md:text-xl font-bold text-center mb-1 text-accent">宫位</h3>
-            <p id="house-result" class="text-center text-blue-100 text-xs sm:text-sm result-hidden"></p>
           </div>
         </div>
         
@@ -208,7 +205,7 @@
           </button>
         </div>
         
-        <!-- 人工解答引导 -->
+        <!-- 人工解答引导 - 二维码文字移到外面 -->
         <div id="consultation-container" class="glass-effect rounded-2xl p-4 sm:p-6 md:p-8 max-w-2xl mx-auto mb-8 sm:mb-10 flex flex-col md:flex-row items-center gap-4 sm:gap-6 result-hidden">
           <div class="text-center md:text-left w-full md:w-2/3">
             <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-accent">需要更深入的解读？</h3>
@@ -216,21 +213,21 @@
             <p class="text-purple-200 text-xs sm:text-sm">扫描右侧二维码添加微信咨询</p>
             <p class="text-amber-300 text-xs sm:text-sm mt-2"><i class="fa fa-info-circle mr-1"></i> 提供个性化解读服务</p>
           </div>
-          <div class="bg-white p-2 sm:p-3 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 w-32 h-32 sm:w-36 sm:h-36">
+          <div class="flex flex-col items-center w-32 h-32 sm:w-36 sm:h-36">
             <!-- 微信二维码图片区域 -->
-            <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+            <div class="bg-white p-2 sm:p-3 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 w-full h-full flex items-center justify-center">
               <img src="https://raw.githubusercontent.com/zhaoyawei100/zxtz/refs/heads/main/erweima.webp" alt="微信二维码" class="w-full h-full object-cover">
             </div>
-            <p class="text-center text-xs text-blue-100 mt-1 sm:mt-2">微信扫码咨询</p>
+            <!-- 二维码文字移到图片框外面 -->
+            <p class="text-center text-xs text-blue-100 mt-3 sm:mt-4">微信扫码咨询</p>
           </div>
         </div>
       </section>
       
-      <!-- 底部联系方式区域 - 优化为更整齐的布局 -->
+      <!-- 底部联系方式区域 -->
       <section class="glass-effect rounded-2xl p-4 sm:p-6 md:p-8 max-w-4xl mx-auto mb-8 sm:mb-10">
         <h2 class="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 text-center text-accent">联系我们</h2>
         
-        <!-- 使用网格布局确保整齐对齐 -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <!-- 联系方式列表 - 左列 -->
           <div class="space-y-6">
@@ -268,15 +265,13 @@
             </div>
           </div>
           
-          <!-- 二维码 - 右列 -->
-          <div class="flex justify-center">
-            <div class="bg-white p-3 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 w-40 h-40 sm:w-48 sm:h-48">
-              <!-- 微信公众号二维码图片区域 -->
-              <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                <img src="https://raw.githubusercontent.com/zhaoyawei100/zxtz/refs/heads/main/gzh.webp" alt="微信公众号二维码" class="w-full h-full object-cover">
-              </div>
-              <p class="text-center text-xs text-blue-100 mt-2">微信扫码关注公众号</p>
+          <!-- 二维码 - 右列，文字移到外面 -->
+          <div class="flex flex-col items-center">
+            <div class="bg-white p-3 rounded-lg shadow-lg transform transition-all duration-300 hover:scale-105 w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center">
+              <img src="https://raw.githubusercontent.com/zhaoyawei100/zxtz/refs/heads/main/gzh.webp" alt="微信公众号二维码" class="w-full h-full object-cover">
             </div>
+            <!-- 二维码文字移到图片框外面 -->
+            <p class="text-center text-xs text-blue-100 mt-3 sm:mt-4">微信扫码关注公众号</p>
           </div>
         </div>
       </section>
@@ -336,7 +331,7 @@
       }
     };
     
-    // 创建动态星星背景 - 根据屏幕大小调整数量
+    // 创建动态星星背景
     function createStars() {
       const container = document.getElementById('stars-container');
       const starsCount = window.innerWidth < 640 ? 50 : window.innerWidth < 1024 ? 100 : 150;
@@ -355,7 +350,6 @@
         star.style.animationDuration = `${duration}s`;
         star.style.animationDelay = `${delay}s`;
         
-        // 随机大小的星星有不同的亮度
         if (size > 2.5) {
           star.style.opacity = 0.8;
         } else if (size > 1.5) {
@@ -428,7 +422,7 @@
         return;
       }
       
-      // 隐藏所有结果元素，准备展示新结果
+      // 隐藏所有结果元素
       document.querySelectorAll('.result-hidden').forEach(el => {
         el.classList.remove('result-visible');
       });
@@ -436,7 +430,7 @@
       // 显示结果区域
       document.getElementById('result-section').classList.remove('hidden');
       
-      // 在移动设备上自动滚动到结果区域
+      // 移动设备滚动到结果区域
       if (window.innerWidth < 640) {
         setTimeout(() => {
           document.getElementById('result-section').scrollIntoView({
@@ -457,63 +451,39 @@
       // 动画完成回调函数
       function animationComplete() {
         animationsCompleted++;
-        // 当所有动画都完成时显示结果
         if (animationsCompleted === totalAnimations) {
-          // 显示结果文本 - 符号在上，文字在下，分两行居中
-          document.getElementById('planet-result').innerHTML = 
-            `<span class="block text-accent text-lg sm:text-xl mb-1">${astrologicalSymbols.planets[planet.name]} ${planet.name}</span>
-             <span class="text-xs sm:text-sm">${planet.meaning}</span>`;
-          document.getElementById('sign-result').innerHTML = 
-            `<span class="block text-accent text-lg sm:text-xl mb-1">${astrologicalSymbols.signs[sign.name]} ${sign.name}</span>
-             <span class="text-xs sm:text-sm">${sign.meaning}</span>`;
-          document.getElementById('house-result').innerHTML = 
-            `<span class="block text-accent text-lg sm:text-xl mb-1">${astrologicalSymbols.houses[house.name]} ${house.name}</span>
-             <span class="text-xs sm:text-sm">${house.meaning}</span>`;
-          
           // 生成综合解读
           generateInterpretation(question, planet, sign, house);
           
-          // 依次显示结果元素，添加延迟创造流畅感
+          // 依次显示结果元素
           setTimeout(() => {
-            document.getElementById('planet-result').classList.add('result-visible');
-          }, 100);
-          
-          setTimeout(() => {
-            document.getElementById('sign-result').classList.add('result-visible');
-          }, 200);
-          
-          setTimeout(() => {
-            document.getElementById('house-result').classList.add('result-visible');
+            document.getElementById('interpretation-container').classList.add('result-visible');
           }, 300);
           
           setTimeout(() => {
-            document.getElementById('interpretation-container').classList.add('result-visible');
+            document.getElementById('recast-container').classList.add('result-visible');
           }, 500);
           
           setTimeout(() => {
-            document.getElementById('recast-container').classList.add('result-visible');
-          }, 700);
-          
-          setTimeout(() => {
             document.getElementById('consultation-container').classList.add('result-visible');
-          }, 900);
+          }, 700);
         }
       }
       
-      // 启动三个骰子的动画，使用相同的持续时间确保同步
+      // 启动三个骰子的动画
       animateDice('planet-dice', planet.name, astrologicalSymbols.planets[planet.name], animationComplete);
       animateDice('sign-dice', sign.name, astrologicalSymbols.signs[sign.name], animationComplete);
       animateDice('house-dice', house.name, astrologicalSymbols.houses[house.name], animationComplete);
     }
     
-    // 骰子动画 - 添加回调参数确保同步
+    // 骰子动画
     function animateDice(elementId, resultText, symbol, callback) {
       const diceElement = document.getElementById(elementId);
       
       // 添加旋转动画
       diceElement.classList.add('animate-roll');
       
-      // 固定动画步骤数，确保所有骰子同时完成
+      // 固定动画步骤数
       const totalSteps = 15;
       let counter = 0;
       
@@ -527,7 +497,7 @@
           clearInterval(interval);
           // 移除旋转动画
           diceElement.classList.remove('animate-roll');
-          // 显示最终结果：符号在上，文字在下，分两行居中
+          // 显示最终结果（只在骰子内显示，不额外展示文字）
           diceElement.innerHTML = `
             <div class="dice-content">
               <div class="dice-symbol text-accent">${symbol}</div>
@@ -538,7 +508,6 @@
           diceElement.classList.add('animate-bounce');
           setTimeout(() => {
             diceElement.classList.remove('animate-bounce');
-            // 调用回调函数通知动画完成
             callback();
           }, 500);
         }
@@ -549,7 +518,7 @@
     function generateInterpretation(question, planet, sign, house) {
       const interpretationElement = document.getElementById('interpretation');
       
-      // 构建解读文本，包含符号
+      // 构建解读文本
       let interpretation = `
         <p>针对您的问题：<span class="text-accent font-medium">${question}</span></p>
         <p>星骰揭示，这个问题的核心与${astrologicalSymbols.planets[planet.name]} ${planet.name}相关，代表着${planet.meaning}。</p>
@@ -573,9 +542,6 @@
       // 重新投掷按钮点击事件
       document.getElementById('recast-btn').addEventListener('click', () => {
         // 清空结果
-        document.getElementById('planet-result').innerHTML = '';
-        document.getElementById('sign-result').innerHTML = '';
-        document.getElementById('house-result').innerHTML = '';
         document.getElementById('interpretation').innerHTML = '';
         
         // 隐藏结果元素
@@ -599,7 +565,7 @@
         }, 1000);
       });
       
-      // 支持按Enter键投掷骰子（Shift+Enter换行）
+      // 支持按Enter键投掷骰子
       document.getElementById('question').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
